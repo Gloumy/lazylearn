@@ -10,8 +10,16 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@vuetify/v0": "^1.0.0-alpha.0",
+    "drizzle-orm": "^0.45.2",
     "nuxt": "^4.4.2",
+    "pg": "^8.20.0",
+    "sass": "^1.99.0",
     "vue": "^3.5.32",
     "vue-router": "^5.0.4"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.20.0",
+    "drizzle-kit": "^0.31.10"
   }
 }
