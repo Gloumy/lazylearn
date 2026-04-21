@@ -186,22 +186,3 @@ function triggerShake(slotId: string) {
   box-sizing: border-box;
 }
 </style>
-
-<style lang="scss">
-@use '~/assets/styles/variables' as *;
-
-.drag-ghost {
-  position: fixed;
-  z-index: 9999;
-  pointer-events: none;
-  border-radius: $radius-tile;
-  font-family: $font-title;
-  font-size: 2.25rem;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
-  transform: scale(1.1);
-}
-</style>

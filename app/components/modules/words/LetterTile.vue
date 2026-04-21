@@ -10,7 +10,10 @@ const emit = defineEmits<{ (e: 'drag-start', event: PointerEvent): void }>()
 <template>
   <button
     class="letter-tile"
-    :class="{ 'letter-tile--dragging': dragging }"
+    :class="{
+      'letter-tile--dragging': dragging,
+      'letter-tile--multi': letter.length > 1,
+    }"
     :style="{ background: color }"
     @pointerdown="emit('drag-start', $event)"
   >
@@ -41,6 +44,10 @@ const emit = defineEmits<{ (e: 'drag-start', event: PointerEvent): void }>()
   &--dragging {
     opacity: 0;
     pointer-events: none;
+  }
+
+  &--multi {
+    font-size: 1.4rem;
   }
 }
 </style>
