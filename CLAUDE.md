@@ -6,7 +6,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Le plan d'implémentation complet est dans `docs/lazylearn-plan.md`. Le lire avant toute intervention non triviale : il contient le contexte produit, la palette SCSS, le schéma Drizzle, la structure cible `app/` + `server/`, et le détail des 4 modules (`words`, `tracing`, `syllables`, `calculator`).
 
-**État actuel** : starter Nuxt 4 brut (scaffold `nuxt create@latest`). La plupart de la structure décrite dans le plan n'existe pas encore — c'est la cible à construire, pas l'existant à lire.
+**État actuel** : phases 1 et 2 terminées.
+- **Phase 1** ✅ — socle (config Nuxt, SCSS/palette, Drizzle schema + migration initiale, API profils, page de sélection + création).
+- **Phase 2** ✅ — module "Les mots" (composables `useDragDrop` / `useSpeech` / `useProgress`, composants `LetterTile` / `DropSlot` / `WordBoard`, `data/words.ts` niveaux 1-3, page `[profile]/words.vue`, API progression).
+- **Phase 3+** ⏳ — Tracer, Syllabes, Calculette, Finitions restent à implémenter.
+
+Le menu `[profile]/index.vue` liste les 4 modules mais seul "Les mots" est actif ; les 3 autres sont affichés `--disabled` jusqu'à leur phase.
 
 ## Commandes
 
@@ -49,4 +54,4 @@ Chaque module a son propre fond coloré profond (`$bg-*` dans `_variables.scss`)
 
 ## Phases d'implémentation
 
-Avancer phase par phase (cf. plan) : **1. Socle** (config, SCSS, Drizzle, API profils, page de sélection) → **2. Mots** → **3. Tracer** → **4. Syllabes** → **5. Calculette** → **6. Finitions**. Chaque phase a un livrable jouable ; ne pas commencer une phase avant que la précédente ne soit fonctionnelle de bout en bout.
+Avancer phase par phase (cf. plan) : **1. Socle** ✅ → **2. Mots** ✅ → **3. Tracer** ⏳ → **4. Syllabes** ⏳ → **5. Calculette** ⏳ → **6. Finitions** ⏳. Chaque phase a un livrable jouable ; ne pas commencer une phase avant que la précédente ne soit fonctionnelle de bout en bout. Quand une phase est terminée, mettre à jour les marqueurs ci-dessus et la section "État actuel".

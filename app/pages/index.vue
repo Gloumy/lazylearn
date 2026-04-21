@@ -64,7 +64,7 @@ function onSelect(id: number) {
 @use '~/assets/styles/variables' as *;
 
 .profiles-screen {
-  min-height: 100%;
+  min-height: 100dvh;
   background: $bg-profiles;
   color: white;
   padding: 32px 24px 48px;

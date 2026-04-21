@@ -8,6 +8,25 @@ const { data: profiles } = await useFetch<Profile[]>('/api/profiles', {
   default: () => [],
 })
 const profile = computed(() => profiles.value.find(p => p.id === id))
+
+const { refresh: refreshProgress, completedCount } = useProgress(id)
+await refreshProgress()
+
+interface ModuleCard {
+  key: string
+  title: string
+  emoji: string
+  to?: string
+  bg: string
+  disabled?: boolean
+}
+
+const modules: ModuleCard[] = [
+  { key: 'words',      title: 'Les mots',  emoji: '📖', to: `/${id}/words`, bg: '#1A237E' },
+  { key: 'tracing',    title: 'Tracer',    emoji: '✏️', bg: '#1B5E20', disabled: true },
+  { key: 'syllables',  title: 'Syllabes',  emoji: '🔤', bg: '#006064', disabled: true },
+  { key: 'calculator', title: 'Calcul',    emoji: '🧮', bg: '#E65100', disabled: true },
+]
 </script>
 
 <template>
@@ -19,7 +38,25 @@ const profile = computed(() => profiles.value.find(p => p.id === id))
         <h1>{{ profile.name }}</h1>
       </div>
     </header>
-    <p class="menu-screen__todo">Menu des modules — à venir (phase 2+).</p>
+
+    <section class="menu-screen__grid">
+      <component
+        :is="m.disabled ? 'div' : 'a'"
+        v-for="m in modules"
+        :key="m.key"
+        :href="m.disabled ? undefined : m.to"
+        class="menu-card"
+        :class="{ 'menu-card--disabled': m.disabled }"
+        :style="{ background: m.bg }"
+      >
+        <span class="menu-card__emoji">{{ m.emoji }}</span>
+        <span class="menu-card__title">{{ m.title }}</span>
+        <span v-if="!m.disabled" class="menu-card__count">
+          {{ completedCount(m.key) }} complété{{ completedCount(m.key) > 1 ? 's' : '' }}
+        </span>
+        <span v-else class="menu-card__badge">Bientôt</span>
+      </component>
+    </section>
   </main>
 </template>
 
@@ -27,13 +64,13 @@ const profile = computed(() => profiles.value.find(p => p.id === id))
 @use '~/assets/styles/variables' as *;
 
 .menu-screen {
-  min-height: 100%;
+  min-height: 100dvh;
   background: $bg-menu;
   color: white;
-  padding: 24px;
+  padding: 32px 24px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 40px;
 }
 
 .menu-screen__header {
@@ -69,10 +106,61 @@ const profile = computed(() => profiles.value.find(p => p.id === id))
   font-size: 2.5rem;
 }
 
-.menu-screen__todo {
+.menu-screen__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.menu-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 20px;
+  border-radius: $radius-card;
+  color: white;
+  text-decoration: none;
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.2);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+
+  &:hover:not(.menu-card--disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  &--disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+  }
+}
+
+.menu-card__emoji {
+  font-size: 3.5rem;
+  line-height: 1;
+}
+
+.menu-card__title {
+  font-family: $font-title;
+  font-size: 1.5rem;
+}
+
+.menu-card__count {
   font-family: $font-body;
+  font-size: 0.95rem;
   opacity: 0.85;
-  font-size: 1.15rem;
-  margin-top: 40px;
+}
+
+.menu-card__badge {
+  font-family: $font-body;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: $radius-btn;
 }
 </style>
