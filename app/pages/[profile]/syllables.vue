@@ -88,7 +88,7 @@ function onBankDragStart(letter: string, variant: 'consonant' | 'vowel', event: 
     <header class="syllables-screen__header">
       <NuxtLink :to="`/${profileId}`" class="syllables-screen__back">← Menu</NuxtLink>
       <div class="syllables-screen__progress">
-        {{ completedCount('syllables') }} syllabes découvertes
+        {{ completedCount('syllables') }} / {{ SYLLABLES.size }} syllabes
       </div>
     </header>
 

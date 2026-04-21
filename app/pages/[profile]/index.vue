@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { Profile } from '~~/server/database/schema'
+import { WORDS } from '~/data/words'
+import { SYLLABLES } from '~/data/syllables'
 
 const route = useRoute()
 const id = Number(route.params.profile)
@@ -18,13 +20,14 @@ interface ModuleCard {
   emoji: string
   to?: string
   bg: string
+  total?: number
   disabled?: boolean
 }
 
 const modules: ModuleCard[] = [
-  { key: 'words',      title: 'Les mots',  emoji: '📖', to: `/${id}/words`, bg: '#1A237E' },
-  { key: 'tracing',    title: 'Tracer',    emoji: '✏️', to: `/${id}/tracing`, bg: '#1B5E20' },
-  { key: 'syllables',  title: 'Syllabes',  emoji: '🔤', to: `/${id}/syllables`, bg: '#006064' },
+  { key: 'words',      title: 'Les mots',  emoji: '📖', to: `/${id}/words`,     bg: '#1A237E', total: WORDS.length },
+  { key: 'tracing',    title: 'Tracer',    emoji: '✏️', to: `/${id}/tracing`,   bg: '#1B5E20', total: 26 },
+  { key: 'syllables',  title: 'Syllabes',  emoji: '🔤', to: `/${id}/syllables`, bg: '#006064', total: SYLLABLES.size },
   { key: 'calculator', title: 'Calcul',    emoji: '🧮', bg: '#E65100', disabled: true },
 ]
 </script>
@@ -52,7 +55,7 @@ const modules: ModuleCard[] = [
         <span class="menu-card__emoji">{{ m.emoji }}</span>
         <span class="menu-card__title">{{ m.title }}</span>
         <span v-if="!m.disabled" class="menu-card__count">
-          {{ completedCount(m.key) }} complété{{ completedCount(m.key) > 1 ? 's' : '' }}
+          {{ completedCount(m.key) }} / {{ m.total }} complété{{ (m.total ?? 0) > 1 ? 's' : '' }}
         </span>
         <span v-else class="menu-card__badge">Bientôt</span>
       </component>
