@@ -23,7 +23,7 @@ interface ModuleCard {
 
 const modules: ModuleCard[] = [
   { key: 'words',      title: 'Les mots',  emoji: '📖', to: `/${id}/words`, bg: '#1A237E' },
-  { key: 'tracing',    title: 'Tracer',    emoji: '✏️', bg: '#1B5E20', disabled: true },
+  { key: 'tracing',    title: 'Tracer',    emoji: '✏️', to: `/${id}/tracing`, bg: '#1B5E20' },
   { key: 'syllables',  title: 'Syllabes',  emoji: '🔤', bg: '#006064', disabled: true },
   { key: 'calculator', title: 'Calcul',    emoji: '🧮', bg: '#E65100', disabled: true },
 ]
