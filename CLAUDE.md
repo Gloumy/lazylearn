@@ -6,14 +6,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Le plan d'implémentation complet est dans `docs/lazylearn-plan.md`. Le lire avant toute intervention non triviale : il contient le contexte produit, la palette SCSS, le schéma Drizzle, la structure cible `app/` + `server/`, et le détail des 4 modules (`words`, `tracing`, `syllables`, `calculator`).
 
-**État actuel** : phases 1 à 4 terminées.
+**État actuel** : phases 1 à 5 terminées.
 - **Phase 1** ✅ — socle (config Nuxt, SCSS/palette, Drizzle schema + migration initiale, API profils, page de sélection + création).
 - **Phase 2** ✅ — module "Les mots" (composables `useDragDrop` / `useSpeech` / `useProgress`, composants `LetterTile` / `DropSlot` / `WordBoard`, `data/words.ts` niveaux 1-3, page `[profile]/words.vue`, API progression).
 - **Phase 3** ✅ — module "Tracer" (composants `TracingCanvas` canvas natif + pointer events + watermark SVG, `LetterNav` alphabet A–Z, page `[profile]/tracing.vue` avec 🔊 / Effacer / Suivant, progression `module='tracing'` ref = lettre).
-- **Phase 4** ✅ — module "Syllabes" (composants `LetterBank` / `SyllableZone`, `data/syllables.ts` CV + CCV, page `[profile]/syllables.vue` drag voyelles/consonnes → zone, validation via Set, TTS uniquement sur syllabe valide, pas de rouge ni de son en cas d'invalide, progression `module='syllables'` ref = syllabe).
-- **Phase 5+** ⏳ — Calculette, Finitions restent à implémenter.
+- **Phase 4** ✅ — module "Syllabes" (composants `LetterBank` / `SyllableZone`, `data/syllables.ts` CV + CCV + digrammes ou/au/eu/ai/oi + accents é/è/ê/à, page `[profile]/syllables.vue` drag voyelles/consonnes → zone, validation via Set, TTS uniquement sur syllabe valide, pas de rouge ni de son en cas d'invalide, progression `module='syllables'` ref = syllabe).
+- **Phase 5** ✅ — module "Calculette" (composants `NumberTile` / `OperatorTile` / `CalcBoard` 3 slots + résultat auto, `data/calculator.ts` avec `compute()` + `TOTAL_OPERATIONS`, page `[profile]/calculator.vue` drag chiffres 0–9 / opérateurs +−×÷, TTS à chaque opération valide, division non entière → message neutre "—" sans son, progression `module='calculator'` ref = `"${a}${op}${b}"`).
+- **Phase 6** ⏳ — Finitions restent à implémenter.
 
-Le menu `[profile]/index.vue` liste les 4 modules ; "Les mots", "Tracer" et "Syllabes" sont actifs, "Calcul" reste `--disabled` jusqu'à sa phase.
+Le menu `[profile]/index.vue` liste les 4 modules, tous actifs.
 
 ## Commandes
 
@@ -56,4 +57,4 @@ Chaque module a son propre fond coloré profond (`$bg-*` dans `_variables.scss`)
 
 ## Phases d'implémentation
 
-Avancer phase par phase (cf. plan) : **1. Socle** ✅ → **2. Mots** ✅ → **3. Tracer** ✅ → **4. Syllabes** ✅ → **5. Calculette** ⏳ → **6. Finitions** ⏳. Chaque phase a un livrable jouable ; ne pas commencer une phase avant que la précédente ne soit fonctionnelle de bout en bout. Quand une phase est terminée, mettre à jour les marqueurs ci-dessus et la section "État actuel".
+Avancer phase par phase (cf. plan) : **1. Socle** ✅ → **2. Mots** ✅ → **3. Tracer** ✅ → **4. Syllabes** ✅ → **5. Calculette** ✅ → **6. Finitions** ⏳. Chaque phase a un livrable jouable ; ne pas commencer une phase avant que la précédente ne soit fonctionnelle de bout en bout. Quand une phase est terminée, mettre à jour les marqueurs ci-dessus et la section "État actuel".

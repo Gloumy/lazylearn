@@ -2,6 +2,7 @@
 import type { Profile } from '~~/server/database/schema'
 import { WORDS } from '~/data/words'
 import { SYLLABLES } from '~/data/syllables'
+import { TOTAL_OPERATIONS } from '~/data/calculator'
 
 const route = useRoute()
 const id = Number(route.params.profile)
@@ -28,7 +29,7 @@ const modules: ModuleCard[] = [
   { key: 'words',      title: 'Les mots',  emoji: '📖', to: `/${id}/words`,     bg: '#1A237E', total: WORDS.length },
   { key: 'tracing',    title: 'Tracer',    emoji: '✏️', to: `/${id}/tracing`,   bg: '#1B5E20', total: 26 },
   { key: 'syllables',  title: 'Syllabes',  emoji: '🔤', to: `/${id}/syllables`, bg: '#006064', total: SYLLABLES.size },
-  { key: 'calculator', title: 'Calcul',    emoji: '🧮', bg: '#E65100', disabled: true },
+  { key: 'calculator', title: 'Calcul',    emoji: '🧮', to: `/${id}/calculator`, bg: '#E65100', total: TOTAL_OPERATIONS },
 ]
 </script>
 
