@@ -136,17 +136,17 @@ function clear(which: SlotKey) {
       transform: translateY(-2px);
     }
   }
+
+  @media (max-width: 480px) {
+    width: 60px;
+    height: 60px;
+    font-size: 1.8rem;
+  }
 }
 
 .calc-board__placeholder {
   font-size: 1.8rem;
   color: rgba(255, 255, 255, 0.4);
-}
-
-.calc-board__equals {
-  font-family: $font-title;
-  font-size: 2.6rem;
-  padding: 0 4px;
 }
 
 .calc-board__result {
@@ -169,10 +169,31 @@ function clear(which: SlotKey) {
     color: #7a3000;
     transform: scale(1.02);
   }
+
+  @media (max-width: 480px) {
+    min-width: 80px;
+    height: 60px;
+    font-size: 2rem;
+    padding: 0 10px;
+  }
 }
 
 .calc-board__result-muted {
   color: rgba(255, 255, 255, 0.45);
   font-size: 2rem;
+
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+  }
+}
+
+.calc-board__equals {
+  font-family: $font-title;
+  font-size: 2.6rem;
+  padding: 0 4px;
+
+  @media (max-width: 480px) {
+    font-size: 2rem;
+  }
 }
 </style>

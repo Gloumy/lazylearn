@@ -206,6 +206,11 @@ const dragBackground = computed(() => {
   flex-direction: column;
   padding: 0 24px 24px;
   gap: 24px;
+
+  @media (max-width: 480px) {
+    padding: 0 12px 16px;
+    gap: 14px;
+  }
 }
 
 .calc-screen__header {
@@ -215,6 +220,10 @@ const dragBackground = computed(() => {
   padding: 20px 0;
   flex-wrap: wrap;
   gap: 12px;
+
+  @media (max-width: 480px) {
+    padding: 12px 0;
+  }
 }
 
 .calc-screen__back {

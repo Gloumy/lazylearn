@@ -61,5 +61,10 @@ function colorFor(letter: string) {
   grid-template-columns: repeat(auto-fill, 72px);
   gap: 10px;
   justify-content: center;
+
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(auto-fill, 56px);
+    gap: 8px;
+  }
 }
 </style>

@@ -1,0 +1,75 @@
+[
+  "ba", "be", "bi", "bo", "bu",
+  "ca", "ce", "ci", "co", "cu",
+  "da", "de", "di", "do", "du",
+  "fa", "fe", "fi", "fo", "fu",
+  "ga", "ge", "gi", "go", "gu",
+  "ha", "he", "hi", "ho", "hu",
+  "ja", "je", "ji", "jo", "ju",
+  "la", "le", "li", "lo", "lu",
+  "ma", "me", "mi", "mo", "mu",
+  "na", "ne", "ni", "no", "nu",
+  "pa", "pe", "pi", "po", "pu",
+  "ra", "re", "ri", "ro", "ru",
+  "sa", "se", "si", "so", "su",
+  "ta", "te", "ti", "to", "tu",
+  "va", "ve", "vi", "vo", "vu",
+  "za", "ze", "zi", "zo", "zu",
+
+  "bé", "cé", "dé", "fé", "gé", "hé", "jé", "lé",
+  "mé", "né", "pé", "ré", "sé", "té", "vé", "zé",
+
+  "bè", "cè", "dè", "fè", "gè", "hè", "jè", "lè",
+  "mè", "nè", "pè", "rè", "sè", "tè", "vè", "zè",
+
+  "bê", "cê", "dê", "fê", "gê", "hê", "jê", "lê",
+  "mê", "nê", "pê", "rê", "sê", "tê", "vê", "zê",
+
+  "bà", "cà", "dà", "fà", "gà", "hà", "jà", "là",
+  "mà", "nà", "pà", "rà", "sà", "tà", "và", "zà",
+
+  "ou", "au", "eu", "ai", "oi",
+
+  "bou", "cou", "dou", "fou", "gou", "hou", "jou", "lou",
+  "mou", "nou", "pou", "rou", "sou", "tou", "vou", "zou",
+  "bau", "cau", "dau", "fau", "gau", "hau", "jau", "lau",
+  "mau", "nau", "pau", "rau", "sau", "tau", "vau", "zau",
+  "beu", "ceu", "deu", "feu", "geu", "heu", "jeu", "leu",
+  "meu", "neu", "peu", "reu", "seu", "teu", "veu", "zeu",
+  "bai", "cai", "dai", "fai", "gai", "hai", "jai", "lai",
+  "mai", "nai", "pai", "rai", "sai", "tai", "vai", "zai",
+  "boi", "coi", "doi", "foi", "goi", "hoi", "joi", "loi",
+  "moi", "noi", "poi", "roi", "soi", "toi", "voi", "zoi",
+
+  "bra", "bre", "bri", "bro", "bru",
+  "cra", "cre", "cri", "cro", "cru",
+  "dra", "dre", "dri", "dro", "dru",
+  "fra", "fre", "fri", "fro", "fru",
+  "gra", "gre", "gri", "gro", "gru",
+  "pra", "pre", "pri", "pro", "pru",
+  "tra", "tre", "tri", "tro", "tru",
+  "vra", "vre", "vri", "vro", "vru",
+
+  "bla", "ble", "bli", "blo", "blu",
+  "cla", "cle", "cli", "clo", "clu",
+  "fla", "fle", "fli", "flo", "flu",
+  "gla", "gle", "gli", "glo", "glu",
+  "pla", "ple", "pli", "plo", "plu",
+
+  "brou", "crou", "drou", "frou", "grou", "prou", "trou", "vrou",
+  "brau", "crau", "drau", "frau", "grau", "prau", "trau", "vrau",
+  "breu", "creu", "dreu", "freu", "greu", "preu", "treu", "vreu",
+  "brai", "crai", "drai", "frai", "grai", "prai", "trai", "vrai",
+  "broi", "croi", "droi", "froi", "groi", "proi", "troi", "vroi",
+
+  "blou", "clou", "flou", "glou", "plou",
+  "blau", "clau", "flau", "glau", "plau",
+  "bleu", "cleu", "fleu", "gleu", "pleu",
+  "blai", "clai", "flai", "glai", "plai",
+  "bloi", "cloi", "floi", "gloi", "ploi",
+
+  "bré", "cré", "dré", "fré", "gré", "pré", "tré", "vré",
+  "blé", "clé", "flé", "glé", "plé",
+  "brè", "crè", "drè", "frè", "grè", "prè", "trè", "vrè",
+  "blè", "clè", "flè", "glè", "plè"
+]

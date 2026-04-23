@@ -49,5 +49,15 @@ const emit = defineEmits<{ (e: 'drag-start', event: PointerEvent): void }>()
   &--multi {
     font-size: 1.4rem;
   }
+
+  @media (max-width: 480px) {
+    width: 56px;
+    height: 56px;
+    font-size: 1.75rem;
+
+    &--multi {
+      font-size: 1.1rem;
+    }
+  }
 }
 </style>

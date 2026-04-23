@@ -310,13 +310,15 @@ Composer des opérations mathématiques par glisser-déposer et voir le résulta
 
 ---
 
-### Phase 6 — Finitions
-- Animations de transition entre pages (Nuxt transitions)
-- Écran de célébration commun (réutilisable entre modules)
-- Affichage de la progression par module sur le menu
-- Responsive mobile portrait (empilement vertical)
-- Tests sur tablette réelle tactile
-- Vérification TTS sur différents navigateurs (Chrome, Safari)
+### Phase 6 — Finitions ✅
+- ✅ Animations de transition entre pages (`pageTransition` global + classes `.page-*` dans `main.scss`).
+- ✅ Écran de célébration commun (`app/components/CelebrationOverlay.vue`, utilisé par `words.vue`, prêt pour les autres modules).
+- ✅ Affichage de la progression par module sur le menu (déjà en place depuis la phase 2 via `useProgress.completedCount`).
+- ✅ Responsive mobile portrait : breakpoint `480px` ajouté sur tuiles (LetterTile/DropSlot/NumberTile/OperatorTile/CalcBoard) et paddings de pages, en plus du `860px` existant pour tablette portrait.
+- ✅ Externalisation du contenu : `public/data/words.json` + `public/data/syllables.json` chargés via `loadWords()` / `loadSyllables()` (cache mémoire avec promesse singleton). La calculette reste générée par `compute()`.
+- ✅ Pinch-zoom bloqué : meta viewport `maximum-scale=1, user-scalable=no` + `touch-action: manipulation` sur `html`/`body` + plugin client `app/plugins/disable-zoom.client.ts` (gesturestart/gesturechange/gestureend + double-tap + ctrl+wheel).
+- ⏳ Tests sur tablette réelle tactile — manuel.
+- ⏳ Vérification TTS sur différents navigateurs (Chrome, Safari) — manuel.
 
 ---
 

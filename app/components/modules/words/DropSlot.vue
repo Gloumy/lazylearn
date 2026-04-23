@@ -45,6 +45,12 @@ defineProps<{
   color: white;
   transition: background 150ms ease, border-color 150ms ease, transform 150ms ease;
 
+  @media (max-width: 480px) {
+    width: 56px;
+    height: 56px;
+    font-size: 1.75rem;
+  }
+
   &--hover {
     border-color: rgba(255, 255, 255, 0.7);
     transform: scale(1.05);

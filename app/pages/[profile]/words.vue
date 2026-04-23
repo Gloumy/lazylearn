@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { WORDS, type WordEntry, type WordLevel } from '~/data/words'
+import { loadWords, type WordEntry, type WordLevel } from '~/data/words'
 
 const route = useRoute()
 const profileId = Number(route.params.profile)
 
 const { completions, refresh: refreshProgress, complete } = useProgress(profileId)
-await refreshProgress()
+const [words] = await Promise.all([loadWords(), refreshProgress()])
 
 const { speak } = useSpeech()
 
 const level = ref<WordLevel>(1)
 
 function pickNext(): WordEntry | null {
-  const pool = WORDS.filter(w => w.level === level.value)
+  const pool = words.filter(w => w.level === level.value)
   const done = new Set(
     completions.value.filter(c => c.module === 'words').map(c => c.ref),
   )
@@ -46,13 +46,13 @@ function next() {
 }
 
 const levelDone = computed(() => {
-  const pool = WORDS.filter(w => w.level === level.value)
+  const pool = words.filter(w => w.level === level.value)
   const done = new Set(
     completions.value.filter(c => c.module === 'words').map(c => c.ref),
   )
   return pool.filter(w => done.has(w.word)).length
 })
-const levelTotal = computed(() => WORDS.filter(w => w.level === level.value).length)
+const levelTotal = computed(() => words.filter(w => w.level === level.value).length)
 </script>
 
 <template>
@@ -83,15 +83,14 @@ const levelTotal = computed(() => WORDS.filter(w => w.level === level.value).len
       <p v-else class="words-screen__empty">Plus de mots pour ce niveau !</p>
     </div>
 
-    <Transition name="celebration">
-      <div v-if="showCelebration" class="words-screen__overlay">
-        <div class="words-screen__celebration">
-          <span class="words-screen__celebration-emoji">{{ currentWord?.emoji }}</span>
-          <h2>{{ currentWord?.article }} {{ currentWord?.word?.toLowerCase() }}</h2>
-          <button class="words-screen__next" @click="next">Mot suivant →</button>
-        </div>
-      </div>
-    </Transition>
+    <CelebrationOverlay
+      :show="showCelebration"
+      :emoji="currentWord?.emoji"
+      :title="currentWord ? `${currentWord.article} ${currentWord.word.toLowerCase()}` : ''"
+      background="#1A237E"
+      next-label="Mot suivant →"
+      @next="next"
+    />
   </main>
 </template>
 
@@ -113,6 +112,11 @@ const levelTotal = computed(() => WORDS.filter(w => w.level === level.value).len
   gap: 16px;
   padding: 20px 24px;
   flex-wrap: wrap;
+
+  @media (max-width: 480px) {
+    padding: 12px 16px;
+    gap: 10px;
+  }
 }
 
 .words-screen__back {
@@ -163,80 +167,15 @@ const levelTotal = computed(() => WORDS.filter(w => w.level === level.value).len
   align-items: center;
   justify-content: center;
   padding: 24px;
+
+  @media (max-width: 480px) {
+    padding: 12px;
+  }
 }
 
 .words-screen__empty {
   font-family: $font-body;
   font-size: 1.1rem;
   opacity: 0.85;
-}
-
-.words-screen__overlay {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.55);
-  z-index: 100;
-}
-
-.words-screen__celebration {
-  background: $bg-words;
-  padding: 40px 48px;
-  border-radius: $radius-card;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  text-align: center;
-  animation: celebration-pop 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.words-screen__celebration-emoji {
-  font-size: 6rem;
-  line-height: 1;
-}
-
-.words-screen__celebration h2 {
-  font-family: $font-title;
-  font-size: 2.5rem;
-  color: white;
-  margin: 0;
-}
-
-.words-screen__next {
-  font-family: $font-body;
-  font-weight: 600;
-  font-size: 1.15rem;
-  padding: 14px 28px;
-  background: #FF6B35;
-  color: white;
-  border-radius: $radius-btn;
-  transition: filter 150ms ease;
-
-  &:hover {
-    filter: brightness(1.1);
-  }
-}
-
-@keyframes celebration-pop {
-  0% {
-    transform: scale(0.6);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-.celebration-enter-active,
-.celebration-leave-active {
-  transition: opacity 250ms ease;
-}
-.celebration-enter-from,
-.celebration-leave-to {
-  opacity: 0;
 }
 </style>

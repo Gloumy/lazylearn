@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Profile } from '~~/server/database/schema'
-import { WORDS } from '~/data/words'
-import { SYLLABLES } from '~/data/syllables'
+import { loadWords } from '~/data/words'
+import { loadSyllables } from '~/data/syllables'
 import { TOTAL_OPERATIONS } from '~/data/calculator'
 
 const route = useRoute()
@@ -13,7 +13,11 @@ const { data: profiles } = await useFetch<Profile[]>('/api/profiles', {
 const profile = computed(() => profiles.value.find(p => p.id === id))
 
 const { refresh: refreshProgress, completedCount } = useProgress(id)
-await refreshProgress()
+const [words, syllables] = await Promise.all([
+  loadWords(),
+  loadSyllables(),
+  refreshProgress(),
+])
 
 interface ModuleCard {
   key: string
@@ -26,9 +30,9 @@ interface ModuleCard {
 }
 
 const modules: ModuleCard[] = [
-  { key: 'words',      title: 'Les mots',  emoji: '📖', to: `/${id}/words`,     bg: '#1A237E', total: WORDS.length },
+  { key: 'words',      title: 'Les mots',  emoji: '📖', to: `/${id}/words`,     bg: '#1A237E', total: words.length },
   { key: 'tracing',    title: 'Tracer',    emoji: '✏️', to: `/${id}/tracing`,   bg: '#1B5E20', total: 26 },
-  { key: 'syllables',  title: 'Syllabes',  emoji: '🔤', to: `/${id}/syllables`, bg: '#006064', total: SYLLABLES.size },
+  { key: 'syllables',  title: 'Syllabes',  emoji: '🔤', to: `/${id}/syllables`, bg: '#006064', total: syllables.size },
   { key: 'calculator', title: 'Calcul',    emoji: '🧮', to: `/${id}/calculator`, bg: '#E65100', total: TOTAL_OPERATIONS },
 ]
 </script>
@@ -75,6 +79,11 @@ const modules: ModuleCard[] = [
   display: flex;
   flex-direction: column;
   gap: 40px;
+
+  @media (max-width: 480px) {
+    padding: 20px 16px;
+    gap: 24px;
+  }
 }
 
 .menu-screen__header {
@@ -117,6 +126,11 @@ const modules: ModuleCard[] = [
   max-width: 900px;
   width: 100%;
   margin: 0 auto;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
 }
 
 .menu-card {
@@ -141,16 +155,29 @@ const modules: ModuleCard[] = [
     cursor: not-allowed;
     box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
   }
+
+  @media (max-width: 480px) {
+    gap: 8px;
+    padding: 18px 12px;
+  }
 }
 
 .menu-card__emoji {
   font-size: 3.5rem;
   line-height: 1;
+
+  @media (max-width: 480px) {
+    font-size: 2.5rem;
+  }
 }
 
 .menu-card__title {
   font-family: $font-title;
   font-size: 1.5rem;
+
+  @media (max-width: 480px) {
+    font-size: 1.15rem;
+  }
 }
 
 .menu-card__count {

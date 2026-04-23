@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SYLLABLES } from '~/data/syllables'
+import { loadSyllables } from '~/data/syllables'
 
 const CONSONANTS = ['b','c','d','f','g','h','j','l','m','n','p','r','s','t','v','z']
 const VOWELS = ['a','à','e','é','è','ê','i','o','u','ou','au','eu','ai','oi']
@@ -21,7 +21,7 @@ const route = useRoute()
 const profileId = Number(route.params.profile)
 
 const { refresh, complete, isCompleted, completedCount } = useProgress(profileId)
-await refresh()
+const [syllables] = await Promise.all([loadSyllables(), refresh()])
 
 const { speak } = useSpeech()
 
@@ -37,7 +37,7 @@ const composition = computed(
   () => zone.value.map(z => z.letter).join('').toLowerCase(),
 )
 const isValid = computed(
-  () => composition.value.length >= 2 && SYLLABLES.has(composition.value),
+  () => composition.value.length >= 2 && syllables.has(composition.value),
 )
 
 watch(isValid, async (v, prev) => {
@@ -88,7 +88,7 @@ function onBankDragStart(letter: string, variant: 'consonant' | 'vowel', event: 
     <header class="syllables-screen__header">
       <NuxtLink :to="`/${profileId}`" class="syllables-screen__back">← Menu</NuxtLink>
       <div class="syllables-screen__progress">
-        {{ completedCount('syllables') }} / {{ SYLLABLES.size }} syllabes
+        {{ completedCount('syllables') }} / {{ syllables.size }} syllabes
       </div>
     </header>
 
@@ -161,6 +161,10 @@ function onBankDragStart(letter: string, variant: 'consonant' | 'vowel', event: 
   display: flex;
   flex-direction: column;
   padding: 0 24px 24px;
+
+  @media (max-width: 480px) {
+    padding: 0 12px 16px;
+  }
 }
 
 .syllables-screen__header {
@@ -170,6 +174,10 @@ function onBankDragStart(letter: string, variant: 'consonant' | 'vowel', event: 
   padding: 20px 0;
   flex-wrap: wrap;
   gap: 12px;
+
+  @media (max-width: 480px) {
+    padding: 12px 0;
+  }
 }
 
 .syllables-screen__back {
@@ -196,6 +204,11 @@ function onBankDragStart(letter: string, variant: 'consonant' | 'vowel', event: 
   align-items: center;
   gap: 20px;
   margin-bottom: 32px;
+
+  @media (max-width: 480px) {
+    gap: 14px;
+    margin-bottom: 18px;
+  }
 }
 
 .syllables-screen__buttons {

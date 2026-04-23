@@ -154,12 +154,20 @@ function triggerShake(slotId: string) {
 .word-board__emoji {
   font-size: 5rem;
   line-height: 1;
+
+  @media (max-width: 480px) {
+    font-size: 3.5rem;
+  }
 }
 
 .word-board__article {
   font-family: $font-title;
   font-size: 1.5rem;
   color: rgba(255, 255, 255, 0.85);
+
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+  }
 }
 
 .word-board__slots,
@@ -168,6 +176,10 @@ function triggerShake(slotId: string) {
   flex-wrap: wrap;
   justify-content: center;
   gap: 12px;
+
+  @media (max-width: 480px) {
+    gap: 8px;
+  }
 }
 
 .word-board__tiles {
@@ -184,5 +196,18 @@ function triggerShake(slotId: string) {
   );
   max-width: 100%;
   box-sizing: border-box;
+
+  @media (max-width: 480px) {
+    --tile-size: 56px;
+    --tile-gap: 8px;
+    padding: 12px;
+    min-height: 80px;
+  }
+}
+
+.word-board {
+  @media (max-width: 480px) {
+    gap: 18px;
+  }
 }
 </style>

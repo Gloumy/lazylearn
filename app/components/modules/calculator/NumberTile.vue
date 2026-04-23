@@ -35,5 +35,11 @@ const emit = defineEmits<{ (e: 'drag-start', event: PointerEvent): void }>()
     transform: translateY(2px);
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
   }
+
+  @media (max-width: 480px) {
+    width: 52px;
+    height: 52px;
+    font-size: 1.5rem;
+  }
 }
 </style>
