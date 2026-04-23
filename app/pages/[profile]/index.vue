@@ -34,6 +34,7 @@ const modules: ModuleCard[] = [
   { key: 'tracing',    title: 'Tracer',    emoji: '✏️', to: `/${id}/tracing`,   bg: '#1B5E20', total: 26 },
   { key: 'syllables',  title: 'Syllabes',  emoji: '🔤', to: `/${id}/syllables`, bg: '#006064', total: syllables.size },
   { key: 'calculator', title: 'Calcul',    emoji: '🧮', to: `/${id}/calculator`, bg: '#E65100', total: TOTAL_OPERATIONS },
+  { key: 'pictures',   title: 'Image-mot', emoji: '🖼️', to: `/${id}/pictures`,   bg: '#4A148C', total: words.length },
 ]
 </script>
 

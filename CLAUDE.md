@@ -6,15 +6,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Le plan d'implémentation complet est dans `docs/lazylearn-plan.md`. Le lire avant toute intervention non triviale : il contient le contexte produit, la palette SCSS, le schéma Drizzle, la structure cible `app/` + `server/`, et le détail des 4 modules (`words`, `tracing`, `syllables`, `calculator`).
 
-**État actuel** : phases 1 à 6 terminées.
+**État actuel** : phases 1 à 7 terminées.
 - **Phase 1** ✅ — socle (config Nuxt, SCSS/palette, Drizzle schema + migration initiale, API profils, page de sélection + création).
 - **Phase 2** ✅ — module "Les mots" (composables `useDragDrop` / `useSpeech` / `useProgress`, composants `LetterTile` / `DropSlot` / `WordBoard`, `data/words.ts` niveaux 1-3, page `[profile]/words.vue`, API progression).
 - **Phase 3** ✅ — module "Tracer" (composants `TracingCanvas` canvas natif + pointer events + watermark SVG, `LetterNav` alphabet A–Z, page `[profile]/tracing.vue` avec 🔊 / Effacer / Suivant, progression `module='tracing'` ref = lettre).
 - **Phase 4** ✅ — module "Syllabes" (composants `LetterBank` / `SyllableZone`, `data/syllables.ts` CV + CCV + digrammes ou/au/eu/ai/oi + accents é/è/ê/à, page `[profile]/syllables.vue` drag voyelles/consonnes → zone, validation via Set, TTS uniquement sur syllabe valide, pas de rouge ni de son en cas d'invalide, progression `module='syllables'` ref = syllabe).
 - **Phase 5** ✅ — module "Calculette" (composants `NumberTile` / `OperatorTile` / `CalcBoard` 3 slots + résultat auto, `data/calculator.ts` avec `compute()` + `TOTAL_OPERATIONS`, page `[profile]/calculator.vue` drag chiffres 0–9 / opérateurs +−×÷, TTS à chaque opération valide, division non entière → message neutre "—" sans son, progression `module='calculator'` ref = `"${a}${op}${b}"`).
-- **Phase 6** ✅ — Finitions : transitions de pages globales (fade + slide léger, `mode: out-in`), composant `CelebrationOverlay` mutualisé, contenu externalisé (`public/data/words.json` + `public/data/syllables.json` chargés via `loadWords()` / `loadSyllables()` avec cache singleton — calculette reste générée par `compute()`), pinch-zoom bloqué (meta viewport + `touch-action: manipulation` + plugin client `disable-zoom.client.ts` pour iOS Safari), responsive portrait `480px` (tuiles 56-60px, paddings réduits) en complément du `860px` tablette.
+- **Phase 6** ✅ — Finitions : transitions de pages globales (fade + slide léger, `mode: out-in`), composant `CelebrationOverlay` mutualisé, contenu externalisé (`public/data/words.json` + `public/data/syllables.json` chargés via `loadWords()` / `loadSyllables()` avec cache singleton — calculette reste générée par `compute()`), pinch-zoom bloqué (meta viewport + `touch-action: pan-x pan-y` + plugin client `disable-zoom.client.ts` qui filtre aussi les `touchstart`/`touchmove` multi-doigts pour Android Chrome / Samsung Internet), responsive portrait `480px` (tuiles 56-60px, paddings réduits) en complément du `860px` tablette.
+- **Phase 7** ✅ — module "Image-mot" (composants `WordChoice` / `PictureBoard`, page `[profile]/pictures.vue`, réutilise `loadWords()` : pioche cible + 3 distracteurs aléatoires du même niveau, tap correct → TTS + célébration, tap incorrect → shake 450ms sans son ni rouge, progression `module='pictures'` ref = mot). Banque `words.json` étendue à 90 mots (30 par niveau).
 
-Le menu `[profile]/index.vue` liste les 4 modules, tous actifs.
+Le menu `[profile]/index.vue` liste les 5 modules, tous actifs.
 
 ## Commandes
 
