@@ -58,4 +58,22 @@ Chaque module a son propre fond coloré profond (`$bg-*` dans `_variables.scss`)
 
 ## Phases d'implémentation
 
-Avancer phase par phase (cf. plan) : **1. Socle** ✅ → **2. Mots** ✅ → **3. Tracer** ✅ → **4. Syllabes** ✅ → **5. Calculette** ✅ → **6. Finitions** ✅. Chaque phase a un livrable jouable ; ne pas commencer une phase avant que la précédente ne soit fonctionnelle de bout en bout. Quand une phase est terminée, mettre à jour les marqueurs ci-dessus et la section "État actuel".
+Avancer phase par phase (cf. plan) : **1. Socle** ✅ → **2. Mots** ✅ → **3. Tracer** ✅ → **4. Syllabes** ✅ → **5. Calculette** ✅ → **6. Finitions** ✅ → **7. Image-mot** ✅. Chaque phase a un livrable jouable ; ne pas commencer une phase avant que la précédente ne soit fonctionnelle de bout en bout. Quand une phase est terminée, mettre à jour les marqueurs ci-dessus et la section "État actuel".
+
+## Idées de prochains modules
+
+Backlog ouvert, classé par effort. Tous suivent le même squelette (`[profile]/<key>.vue` + composants `modules/<key>/` + `CelebrationOverlay` + `useProgress`). **Prochaine cible retenue : Couleurs.**
+
+**Pour la petite (3-5 ans)**
+- ⭐ **Couleurs** — un rond/carré coloré + 4 noms de couleurs en réponse, TTS sur clic correct. Dataset minuscule (10-12 couleurs), pas de fichier JSON nécessaire. *~1h.*
+- **Compter (1→10)** — emoji répété N fois + 4 chiffres, calque `pictures.vue`. *~2h.*
+- **Premier son** — image + 4 lettres, taper la 1ʳᵉ lettre du mot. Réutilise `words.json`. *~2h.*
+- **Tracer chiffres 0-9** — réutilise `TracingCanvas` à l'identique, juste 10 watermarks SVG. *~1-2h.*
+- **Mémo / paires** — grille 4×3, retrouver les paires emoji. Mécanique nouvelle (état caché). *~4h.*
+
+**Pour la grande (6-9 ans)**
+- **Dictée assemblage** — TTS dit un mot, l'enfant assemble lettre par lettre, bouton 🔊 répétable. Variant de `words.vue` sans image. Réutilise les 90 mots. *~2h.*
+- **Tables de multiplication** — variant calculette avec table imposée (×2, ×3…). Réutilise `compute()`. *~2h.*
+- **Ordre alphabétique** — 4 mots à glisser dans l'ordre. Réutilise `useDragDrop` + `loadWords()`. *~3h.*
+- **Compléter la phrase** — "Le chat boit du ___" + 3 options. Effort code faible mais demande beaucoup de contenu rédigé. *~2h code, contenu ++.*
+- **Horloge** — analogique + 4 propositions textuelles. Composant SVG dédié. *~4h.*

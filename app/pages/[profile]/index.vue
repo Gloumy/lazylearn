@@ -3,6 +3,7 @@ import type { Profile } from '~~/server/database/schema'
 import { loadWords } from '~/data/words'
 import { loadSyllables } from '~/data/syllables'
 import { TOTAL_OPERATIONS } from '~/data/calculator'
+import { TOTAL_COLORS } from '~/data/colors'
 
 const route = useRoute()
 const id = Number(route.params.profile)
@@ -35,6 +36,7 @@ const modules: ModuleCard[] = [
   { key: 'syllables',  title: 'Syllabes',  emoji: '🔤', to: `/${id}/syllables`, bg: '#006064', total: syllables.size },
   { key: 'calculator', title: 'Calcul',    emoji: '🧮', to: `/${id}/calculator`, bg: '#E65100', total: TOTAL_OPERATIONS },
   { key: 'pictures',   title: 'Image-mot', emoji: '🖼️', to: `/${id}/pictures`,   bg: '#4A148C', total: words.length },
+  { key: 'colors',     title: 'Couleurs',  emoji: '🎨', to: `/${id}/colors`,     bg: '#263238', total: TOTAL_COLORS },
 ]
 </script>
 
