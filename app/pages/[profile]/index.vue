@@ -4,6 +4,7 @@ import { loadWords } from '~/data/words'
 import { loadSyllables } from '~/data/syllables'
 import { TOTAL_OPERATIONS } from '~/data/calculator'
 import { TOTAL_COLORS } from '~/data/colors'
+import { TOTAL_RANGES } from '~/data/numbers'
 
 const route = useRoute()
 const id = Number(route.params.profile)
@@ -37,6 +38,7 @@ const modules: ModuleCard[] = [
   { key: 'calculator', title: 'Calcul',    emoji: '🧮', to: `/${id}/calculator`, bg: '#E65100', total: TOTAL_OPERATIONS },
   { key: 'pictures',   title: 'Image-mot', emoji: '🖼️', to: `/${id}/pictures`,   bg: '#4A148C', total: words.length },
   { key: 'colors',     title: 'Couleurs',  emoji: '🎨', to: `/${id}/colors`,     bg: '#263238', total: TOTAL_COLORS },
+  { key: 'numbers',    title: 'Chiffres',  emoji: '🔢', to: `/${id}/numbers`,    bg: '#00695C', total: TOTAL_RANGES },
 ]
 </script>
 

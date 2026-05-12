@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Le plan d'implémentation complet est dans `docs/lazylearn-plan.md`. Le lire avant toute intervention non triviale : il contient le contexte produit, la palette SCSS, le schéma Drizzle, la structure cible `app/` + `server/`, et le détail des 4 modules (`words`, `tracing`, `syllables`, `calculator`).
 
-**État actuel** : phases 1 à 7 terminées.
+**État actuel** : phases 1 à 8 terminées.
 - **Phase 1** ✅ — socle (config Nuxt, SCSS/palette, Drizzle schema + migration initiale, API profils, page de sélection + création).
 - **Phase 2** ✅ — module "Les mots" (composables `useDragDrop` / `useSpeech` / `useProgress`, composants `LetterTile` / `DropSlot` / `WordBoard`, `data/words.ts` niveaux 1-3, page `[profile]/words.vue`, API progression).
 - **Phase 3** ✅ — module "Tracer" (composants `TracingCanvas` canvas natif + pointer events + watermark SVG, `LetterNav` alphabet A–Z, page `[profile]/tracing.vue` avec 🔊 / Effacer / Suivant, progression `module='tracing'` ref = lettre).
@@ -14,8 +14,9 @@ Le plan d'implémentation complet est dans `docs/lazylearn-plan.md`. Le lire ava
 - **Phase 5** ✅ — module "Calculette" (composants `NumberTile` / `OperatorTile` / `CalcBoard` 3 slots + résultat auto, `data/calculator.ts` avec `compute()` + `TOTAL_OPERATIONS`, page `[profile]/calculator.vue` drag chiffres 0–9 / opérateurs +−×÷, TTS à chaque opération valide, division non entière → message neutre "—" sans son, progression `module='calculator'` ref = `"${a}${op}${b}"`).
 - **Phase 6** ✅ — Finitions : transitions de pages globales (fade + slide léger, `mode: out-in`), composant `CelebrationOverlay` mutualisé, contenu externalisé (`public/data/words.json` + `public/data/syllables.json` chargés via `loadWords()` / `loadSyllables()` avec cache singleton — calculette reste générée par `compute()`), pinch-zoom bloqué (meta viewport + `touch-action: pan-x pan-y` + plugin client `disable-zoom.client.ts` qui filtre aussi les `touchstart`/`touchmove` multi-doigts pour Android Chrome / Samsung Internet), responsive portrait `480px` (tuiles 56-60px, paddings réduits) en complément du `860px` tablette.
 - **Phase 7** ✅ — module "Image-mot" (composants `WordChoice` / `PictureBoard`, page `[profile]/pictures.vue`, réutilise `loadWords()` : pioche cible + 3 distracteurs aléatoires du même niveau, tap correct → TTS + célébration, tap incorrect → shake 450ms sans son ni rouge, progression `module='pictures'` ref = mot). Banque `words.json` étendue à 90 mots (30 par niveau).
+- **Phase 8** ✅ — module "Chiffres" (composants `NumberCell` / `NumberGrid`, page `[profile]/numbers.vue`, `data/numbers.ts` avec 10 tranches 1-10 → 91-100 générées par code, grille 5×2 mélangée, tap du prochain chiffre attendu → TTS + tuile verrouillée/grisée, tap incorrect → shake 450ms sans son, tranche complète → célébration, progression `module='numbers'` ref = `"${start}-${end}"`).
 
-Le menu `[profile]/index.vue` liste les 5 modules, tous actifs.
+Le menu `[profile]/index.vue` liste les 7 modules, tous actifs.
 
 ## Commandes
 
@@ -58,7 +59,7 @@ Chaque module a son propre fond coloré profond (`$bg-*` dans `_variables.scss`)
 
 ## Phases d'implémentation
 
-Avancer phase par phase (cf. plan) : **1. Socle** ✅ → **2. Mots** ✅ → **3. Tracer** ✅ → **4. Syllabes** ✅ → **5. Calculette** ✅ → **6. Finitions** ✅ → **7. Image-mot** ✅. Chaque phase a un livrable jouable ; ne pas commencer une phase avant que la précédente ne soit fonctionnelle de bout en bout. Quand une phase est terminée, mettre à jour les marqueurs ci-dessus et la section "État actuel".
+Avancer phase par phase (cf. plan) : **1. Socle** ✅ → **2. Mots** ✅ → **3. Tracer** ✅ → **4. Syllabes** ✅ → **5. Calculette** ✅ → **6. Finitions** ✅ → **7. Image-mot** ✅ → **8. Chiffres** ✅. Chaque phase a un livrable jouable ; ne pas commencer une phase avant que la précédente ne soit fonctionnelle de bout en bout. Quand une phase est terminée, mettre à jour les marqueurs ci-dessus et la section "État actuel".
 
 ## Idées de prochains modules
 
