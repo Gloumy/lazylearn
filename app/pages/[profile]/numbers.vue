@@ -22,7 +22,7 @@ const currentRange = ref<NumberRange | null>(pickNext())
 const showCelebration = ref(false)
 
 function onProgress(value: number) {
-  speak(String(value), { rate: 0.95 })
+  speak(numberToWords(value), { rate: 0.95 })
 }
 
 async function onComplete() {

@@ -18,7 +18,9 @@ Le plan d'implémentation complet est dans `docs/lazylearn-plan.md`. Le lire ava
 
 - **Phase 9** ✅ — module "Les sons" (composants `SoundCard` / `SoundHouseZone` / `SoundBoard`, page `[profile]/sounds.vue`, `data/sounds.ts` + `public/data/sounds.json` chargé via `loadSounds()`). Séries de mots à trier par drag dans 2 à 4 "maisons" (son entendu ou graphie). Format mot : lettres-cibles entre crochets (`"ro[s]e"`, `"b[on]b[on]"`), surlignées une fois le mot bien rangé. TTS du mot dès qu'on le prend (le tri se fait à l'oreille) et à la pose correcte ; tap sur une maison → TTS de son champ `say`. Mauvaise maison → shake sans son ni rouge. Progression `module='sounds'` ref = id de série.
 
-Le menu `[profile]/index.vue` liste les 8 modules, tous actifs.
+- **Refonte menu / audio** ✅ — registre `app/data/modules.ts` (`enabled`, `audience`) : le menu n'affiche que les modules actifs, groupés en « Pour les grands » / « Pour les petits », avec barre de progression, liens `NuxtLink` (SPA, plus de rechargement complet). **Désactivés** (pages conservées, accessibles par URL) : `words`, `syllables`, `calculator`. **Couleurs** et **Image-mot** (renommé « Écoute et trouve ») passés en mode audio pour la petite qui ne lit pas : la voix demande (« Montre-moi le rouge »), l'enfant touche la pastille / l'image ; bouton `ListenButton` 🔊 pour réécouter. `useSpeech` met la voix en cache (`voiceschanged`) et préfère fr-BE puis fr-FR. Les nombres sont lus via `numberToWords()` (septante / nonante).
+
+Le menu `[profile]/index.vue` est piloté par `app/data/modules.ts` : pour activer/désactiver un module, changer `enabled` ; pour un nouveau module, l'y ajouter + son total dans `totals`.
 
 ## Commandes
 
@@ -48,6 +50,8 @@ Ces règles viennent du plan et évitent des allers-retours :
 - Drag & drop : **pointer events** (`pointerdown` / `pointermove` / `pointerup`) uniquement, jamais mouse events — cible tablette tactile.
 - TTS : `window.speechSynthesis` avec `lang: 'fr-FR'`, voix française si disponible.
 - **Données de contenu** (mots, syllabes) : JSON dans `public/data/` chargés au runtime via les loaders cachés `loadWords()` / `loadSyllables()` exposés depuis `app/data/*.ts`. Mise à jour = remplacer le fichier sur le serveur, sans rebuild. La calculette reste générée par code (`compute()` + `TOTAL_OPERATIONS`). Pas de contenu en DB.
+- **Utilitaires partagés** dans `app/utils/` (auto-importés) : `shuffled()`, `numberToWords()`. Ne pas redéfinir `shuffled` localement.
+- **Public maternelle = zéro lecture** : consigne audio + `ListenButton`, réponses en images/couleurs, jamais en texte.
 - **DB** : stocke uniquement les complétions (`profileId` + `module` + `ref` + date), pas les tentatives ni les erreurs.
 
 ## Architecture cible
@@ -65,10 +69,9 @@ Avancer phase par phase (cf. plan) : **1. Socle** ✅ → **2. Mots** ✅ → **
 
 ## Idées de prochains modules
 
-Backlog ouvert, classé par effort. Tous suivent le même squelette (`[profile]/<key>.vue` + composants `modules/<key>/` + `CelebrationOverlay` + `useProgress`). **Prochaine cible retenue : Couleurs.**
+Backlog ouvert, classé par effort. Tous suivent le même squelette (`[profile]/<key>.vue` + composants `modules/<key>/` + `CelebrationOverlay` + `useProgress`). 
 
 **Pour la petite (3-5 ans)**
-- ⭐ **Couleurs** — un rond/carré coloré + 4 noms de couleurs en réponse, TTS sur clic correct. Dataset minuscule (10-12 couleurs), pas de fichier JSON nécessaire. *~1h.*
 - **Compter (1→10)** — emoji répété N fois + 4 chiffres, calque `pictures.vue`. *~2h.*
 - **Premier son** — image + 4 lettres, taper la 1ʳᵉ lettre du mot. Réutilise `words.json`. *~2h.*
 - **Tracer chiffres 0-9** — réutilise `TracingCanvas` à l'identique, juste 10 watermarks SVG. *~1-2h.*

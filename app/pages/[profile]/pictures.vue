@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { loadWords, type WordEntry, type WordLevel } from '~/data/words'
+import { loadWords, type WordEntry } from '~/data/words'
 
 const route = useRoute()
 const profileId = Number(route.params.profile)
@@ -9,9 +9,8 @@ const [words] = await Promise.all([loadWords(), refreshProgress()])
 
 const { speak } = useSpeech()
 
-const level = ref<WordLevel>(1)
-
-const pool = computed(() => words.filter(w => w.level === level.value))
+// Mode audio : le niveau d'orthographe n'a pas de sens ici, on pioche dans tout.
+const pool = computed(() => words)
 
 function pickNext(): WordEntry | null {
   const done = new Set(
@@ -26,16 +25,11 @@ function pickNext(): WordEntry | null {
 const currentWord = ref<WordEntry | null>(pickNext())
 const showCelebration = ref(false)
 
-watch(level, () => {
-  showCelebration.value = false
-  currentWord.value = pickNext()
-})
-
 async function onComplete() {
   if (!currentWord.value) return
   const entry = currentWord.value
   setTimeout(() => {
-    speak(`le mot : ${entry.article} ${entry.word.toLowerCase()}`, { rate: 0.9 })
+    speak(`Bravo ! ${entry.article} ${entry.word.toLowerCase()}`, { rate: 0.9 })
   }, 300)
   showCelebration.value = true
   await complete('pictures', entry.word)
@@ -59,17 +53,6 @@ const levelTotal = computed(() => pool.value.length)
   <main class="pictures-screen">
     <header class="pictures-screen__header">
       <NuxtLink :to="`/${profileId}`" class="pictures-screen__back">← Menu</NuxtLink>
-      <div class="pictures-screen__levels">
-        <button
-          v-for="lvl in ([1, 2, 3] as const)"
-          :key="lvl"
-          class="pictures-screen__level"
-          :class="{ 'pictures-screen__level--active': level === lvl }"
-          @click="level = lvl"
-        >
-          Niveau {{ lvl }}
-        </button>
-      </div>
       <div class="pictures-screen__progress">{{ levelDone }} / {{ levelTotal }}</div>
     </header>
 
@@ -81,7 +64,7 @@ const levelTotal = computed(() => pool.value.length)
         :pool="pool"
         @complete="onComplete"
       />
-      <p v-else class="pictures-screen__empty">Plus d'images pour ce niveau !</p>
+      <p v-else class="pictures-screen__empty">Plus d'images !</p>
     </div>
 
     <CelebrationOverlay
@@ -132,29 +115,6 @@ const levelTotal = computed(() => pool.value.length)
   }
 }
 
-.pictures-screen__levels {
-  display: flex;
-  gap: 8px;
-}
-
-.pictures-screen__level {
-  padding: 8px 14px;
-  font-family: $font-body;
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: white;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: $radius-btn;
-  transition: background 150ms ease;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.2);
-  }
-
-  &--active {
-    background: rgba(255, 255, 255, 0.3);
-  }
-}
 
 .pictures-screen__progress {
   font-family: $font-title;

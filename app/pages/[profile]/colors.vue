@@ -26,7 +26,7 @@ async function onComplete() {
   if (!currentColor.value) return
   const entry = currentColor.value
   setTimeout(() => {
-    speak(`la couleur ${entry.name.toLowerCase()}`, { rate: 0.9 })
+    speak(`Bravo ! Le ${entry.name.toLowerCase()}`, { rate: 0.9 })
   }, 300)
   showCelebration.value = true
   await complete('colors', entry.name)

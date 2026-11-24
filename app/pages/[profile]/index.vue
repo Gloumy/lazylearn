@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import type { Profile } from '~~/server/database/schema'
 import { loadWords } from '~/data/words'
-import { loadSyllables } from '~/data/syllables'
-import { TOTAL_OPERATIONS } from '~/data/calculator'
-import { TOTAL_COLORS } from '~/data/colors'
+import { COLORS } from '~/data/colors'
 import { TOTAL_RANGES } from '~/data/numbers'
 import { loadSounds } from '~/data/sounds'
+import { AUDIENCES, MODULES } from '~/data/modules'
 
 const route = useRoute()
 const id = Number(route.params.profile)
@@ -16,33 +15,28 @@ const { data: profiles } = await useFetch<Profile[]>('/api/profiles', {
 const profile = computed(() => profiles.value.find(p => p.id === id))
 
 const { refresh: refreshProgress, completedCount } = useProgress(id)
-const [words, syllables, sounds] = await Promise.all([
+const [words, sounds] = await Promise.all([
   loadWords(),
-  loadSyllables(),
   loadSounds(),
   refreshProgress(),
 ])
 
-interface ModuleCard {
-  key: string
-  title: string
-  emoji: string
-  to?: string
-  bg: string
-  total?: number
-  disabled?: boolean
+const totals: Record<string, number> = {
+  sounds: sounds.length,
+  numbers: TOTAL_RANGES,
+  pictures: words.length,
+  colors: COLORS.length,
+  tracing: 26,
 }
 
-const modules: ModuleCard[] = [
-  { key: 'words',      title: 'Les mots',  emoji: '📖', to: `/${id}/words`,     bg: '#1A237E', total: words.length },
-  { key: 'tracing',    title: 'Tracer',    emoji: '✏️', to: `/${id}/tracing`,   bg: '#1B5E20', total: 26 },
-  { key: 'syllables',  title: 'Syllabes',  emoji: '🔤', to: `/${id}/syllables`, bg: '#006064', total: syllables.size },
-  { key: 'calculator', title: 'Calcul',    emoji: '🧮', to: `/${id}/calculator`, bg: '#E65100', total: TOTAL_OPERATIONS },
-  { key: 'pictures',   title: 'Image-mot', emoji: '🖼️', to: `/${id}/pictures`,   bg: '#4A148C', total: words.length },
-  { key: 'colors',     title: 'Couleurs',  emoji: '🎨', to: `/${id}/colors`,     bg: '#263238', total: TOTAL_COLORS },
-  { key: 'numbers',    title: 'Chiffres',  emoji: '🔢', to: `/${id}/numbers`,    bg: '#00695C', total: TOTAL_RANGES },
-  { key: 'sounds',     title: 'Les sons',  emoji: '👂', to: `/${id}/sounds`,     bg: '#880E4F', total: sounds.length },
-]
+const sections = AUDIENCES.map(a => ({
+  ...a,
+  modules: MODULES.filter(m => m.enabled && m.audience === a.key).map(m => {
+    const total = totals[m.key] ?? 0
+    const done = Math.min(completedCount(m.key), total)
+    return { ...m, total, done, pct: total ? Math.round((done / total) * 100) : 0 }
+  }),
+})).filter(s => s.modules.length)
 </script>
 
 <template>
@@ -55,23 +49,26 @@ const modules: ModuleCard[] = [
       </div>
     </header>
 
-    <section class="menu-screen__grid">
-      <component
-        :is="m.disabled ? 'div' : 'a'"
-        v-for="m in modules"
-        :key="m.key"
-        :href="m.disabled ? undefined : m.to"
-        class="menu-card"
-        :class="{ 'menu-card--disabled': m.disabled }"
-        :style="{ background: m.bg }"
-      >
-        <span class="menu-card__emoji">{{ m.emoji }}</span>
-        <span class="menu-card__title">{{ m.title }}</span>
-        <span v-if="!m.disabled" class="menu-card__count">
-          {{ completedCount(m.key) }} / {{ m.total }} complété{{ (m.total ?? 0) > 1 ? 's' : '' }}
-        </span>
-        <span v-else class="menu-card__badge">Bientôt</span>
-      </component>
+    <section v-for="s in sections" :key="s.key" class="menu-screen__section">
+      <h2 class="menu-screen__section-title">{{ s.title }}</h2>
+      <div class="menu-screen__grid">
+        <NuxtLink
+          v-for="m in s.modules"
+          :key="m.key"
+          :to="`/${id}/${m.key}`"
+          class="menu-card"
+          :style="{ background: m.bg }"
+        >
+          <span class="menu-card__emoji">{{ m.emoji }}</span>
+          <span class="menu-card__title">{{ m.title }}</span>
+          <span class="menu-card__bar">
+            <span class="menu-card__bar-fill" :style="{ width: `${m.pct}%` }" />
+          </span>
+          <span class="menu-card__count">
+            {{ m.done }} / {{ m.total }}<template v-if="m.done === m.total && m.total"> ⭐</template>
+          </span>
+        </NuxtLink>
+      </div>
     </section>
   </main>
 </template>
@@ -127,13 +124,24 @@ const modules: ModuleCard[] = [
   font-size: 2.5rem;
 }
 
+.menu-screen__section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.menu-screen__section-title {
+  font-size: 1.5rem;
+  opacity: 0.95;
+}
+
 .menu-screen__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
-  max-width: 900px;
-  width: 100%;
-  margin: 0 auto;
 
   @media (max-width: 480px) {
     grid-template-columns: 1fr 1fr;
@@ -153,15 +161,9 @@ const modules: ModuleCard[] = [
   box-shadow: 0 8px 0 rgba(0, 0, 0, 0.2);
   transition: transform 180ms ease, box-shadow 180ms ease;
 
-  &:hover:not(.menu-card--disabled) {
+  &:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 0 rgba(0, 0, 0, 0.2);
-  }
-
-  &--disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
   }
 
   @media (max-width: 480px) {
@@ -194,12 +196,19 @@ const modules: ModuleCard[] = [
   opacity: 0.85;
 }
 
-.menu-card__badge {
-  font-family: $font-body;
-  font-weight: 600;
-  font-size: 0.85rem;
-  padding: 4px 10px;
+.menu-card__bar {
+  width: 70%;
+  height: 8px;
+  border-radius: 4px;
   background: rgba(255, 255, 255, 0.2);
-  border-radius: $radius-btn;
+  overflow: hidden;
+}
+
+.menu-card__bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: #FECA57;
+  transition: width 400ms ease;
 }
 </style>

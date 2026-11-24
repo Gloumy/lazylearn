@@ -1,3 +1,5 @@
+import type { Ref } from 'vue'
+
 interface DragState<T> {
   data: T
   offsetX: number
@@ -9,7 +11,7 @@ interface DragState<T> {
 export function useDragDrop<T>(opts: {
   onDrop: (data: T, targetId: string | null) => void
 }) {
-  const dragged = ref<DragState<T> | null>(null)
+  const dragged = ref(null) as Ref<DragState<T> | null>
   const pointer = ref({ x: 0, y: 0 })
   const hoverTargetId = ref<string | null>(null)
 

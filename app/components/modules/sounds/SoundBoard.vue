@@ -8,15 +8,6 @@ const HOUSE_COLORS = ['#45aaf2', '#26de81', '#FF9F43', '#a55eea']
 
 const { speak } = useSpeech()
 
-function shuffled<T>(arr: T[]): T[] {
-  const out = [...arr]
-  for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[out[i], out[j]] = [out[j]!, out[i]!]
-  }
-  return out
-}
-
 const bank = ref<SoundWord[]>([])
 const placed = ref<Record<string, SoundWord[]>>({})
 const shakingHouse = ref<string | null>(null)

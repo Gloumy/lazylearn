@@ -1,42 +1,38 @@
 <script setup lang="ts">
 import type { WordEntry } from '~/data/words'
 
+// Mode audio "Écoute et trouve" : la voix nomme un objet, l'enfant touche
+// la bonne image parmi 4. Aucune lecture nécessaire (public maternelle).
 const props = defineProps<{ entry: WordEntry; pool: WordEntry[] }>()
 const emit = defineEmits<{ (e: 'complete'): void }>()
 
-const TILE_COLORS = [
-  '#FF6B6B', '#FF9F43', '#FECA57', '#26de81',
-  '#45aaf2', '#a55eea', '#2bcbba', '#FC427B',
-]
+const { speak } = useSpeech()
 
-interface Choice {
-  word: string
-  color: string
-}
-
-function shuffled<T>(arr: T[]): T[] {
-  const out = [...arr]
-  for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[out[i], out[j]] = [out[j]!, out[i]!]
-  }
-  return out
-}
-
-const choices = ref<Choice[]>([])
+const choices = ref<WordEntry[]>([])
 const shakingWord = ref<string | null>(null)
 const locked = ref(false)
 
+function prompt() {
+  speak(`Montre-moi ${props.entry.article} ${props.entry.word.toLowerCase()}`, { rate: 0.9 })
+}
+
 function setup(entry: WordEntry, pool: WordEntry[]) {
-  const distractors = shuffled(pool.filter(w => w.word !== entry.word)).slice(0, 3)
-  const all = shuffled([entry, ...distractors])
-  const colors = shuffled(TILE_COLORS).slice(0, 4)
-  choices.value = all.map((w, i) => ({ word: w.word, color: colors[i]! }))
+  // Distracteurs d'emoji différents (évite deux images identiques).
+  const seen = new Set([entry.emoji])
+  const distractors: WordEntry[] = []
+  for (const w of shuffled(pool)) {
+    if (distractors.length === 3) break
+    if (seen.has(w.emoji)) continue
+    seen.add(w.emoji)
+    distractors.push(w)
+  }
+  choices.value = shuffled([entry, ...distractors])
   shakingWord.value = null
   locked.value = false
 }
 
 watch(() => props.entry, e => setup(e, props.pool), { immediate: true })
+onMounted(() => setTimeout(prompt, 350))
 
 function pick(word: string) {
   if (locked.value) return
@@ -54,23 +50,27 @@ function pick(word: string) {
 
 <template>
   <div class="picture-board">
-    <span class="picture-board__emoji">{{ entry.emoji }}</span>
+    <ListenButton @click="prompt" />
 
     <div class="picture-board__choices">
-      <WordChoice
+      <button
         v-for="c in choices"
         :key="c.word"
-        :label="c.word"
-        :color="c.color"
-        :shaking="shakingWord === c.word"
+        class="picture-board__choice"
+        :class="{ 'picture-board__choice--shake': shakingWord === c.word }"
+        :aria-label="c.word"
         :disabled="locked"
-        @select="pick(c.word)"
-      />
+        @click="pick(c.word)"
+      >
+        {{ c.emoji }}
+      </button>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+@use '~/assets/styles/variables' as *;
+
 .picture-board {
   display: flex;
   flex-direction: column;
@@ -83,24 +83,47 @@ function pick(word: string) {
   }
 }
 
-.picture-board__emoji {
-  font-size: 9rem;
-  line-height: 1;
-
-  @media (max-width: 480px) {
-    font-size: 5rem;
-  }
-}
-
 .picture-board__choices {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+  gap: 24px;
   width: 100%;
-  max-width: 520px;
+  max-width: 480px;
 
   @media (max-width: 480px) {
-    gap: 10px;
+    gap: 14px;
+    max-width: 320px;
   }
+}
+
+.picture-board__choice {
+  aspect-ratio: 1;
+  font-size: 6rem;
+  line-height: 1;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: $radius-card;
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.3);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+
+  &:active:not(:disabled) {
+    transform: translateY(4px);
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  &--shake {
+    animation: shake 400ms ease;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 4rem;
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(4px); }
 }
 </style>
