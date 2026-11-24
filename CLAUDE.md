@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Le plan d'implémentation complet est dans `docs/lazylearn-plan.md`. Le lire avant toute intervention non triviale : il contient le contexte produit, la palette SCSS, le schéma Drizzle, la structure cible `app/` + `server/`, et le détail des 4 modules (`words`, `tracing`, `syllables`, `calculator`).
 
-**État actuel** : phases 1 à 8 terminées.
+**État actuel** : phases 1 à 9 terminées.
 - **Phase 1** ✅ — socle (config Nuxt, SCSS/palette, Drizzle schema + migration initiale, API profils, page de sélection + création).
 - **Phase 2** ✅ — module "Les mots" (composables `useDragDrop` / `useSpeech` / `useProgress`, composants `LetterTile` / `DropSlot` / `WordBoard`, `data/words.ts` niveaux 1-3, page `[profile]/words.vue`, API progression).
 - **Phase 3** ✅ — module "Tracer" (composants `TracingCanvas` canvas natif + pointer events + watermark SVG, `LetterNav` alphabet A–Z, page `[profile]/tracing.vue` avec 🔊 / Effacer / Suivant, progression `module='tracing'` ref = lettre).
@@ -16,7 +16,9 @@ Le plan d'implémentation complet est dans `docs/lazylearn-plan.md`. Le lire ava
 - **Phase 7** ✅ — module "Image-mot" (composants `WordChoice` / `PictureBoard`, page `[profile]/pictures.vue`, réutilise `loadWords()` : pioche cible + 3 distracteurs aléatoires du même niveau, tap correct → TTS + célébration, tap incorrect → shake 450ms sans son ni rouge, progression `module='pictures'` ref = mot). Banque `words.json` étendue à 90 mots (30 par niveau).
 - **Phase 8** ✅ — module "Chiffres" (composants `NumberCell` / `NumberGrid`, page `[profile]/numbers.vue`, `data/numbers.ts` avec 10 tranches 1-10 → 91-100 générées par code, grille 5×2 mélangée, tap du prochain chiffre attendu → TTS + tuile verrouillée/grisée, tap incorrect → shake 450ms sans son, tranche complète → célébration, progression `module='numbers'` ref = `"${start}-${end}"`).
 
-Le menu `[profile]/index.vue` liste les 7 modules, tous actifs.
+- **Phase 9** ✅ — module "Les sons" (composants `SoundCard` / `SoundHouseZone` / `SoundBoard`, page `[profile]/sounds.vue`, `data/sounds.ts` + `public/data/sounds.json` chargé via `loadSounds()`). Séries de mots à trier par drag dans 2 à 4 "maisons" (son entendu ou graphie). Format mot : lettres-cibles entre crochets (`"ro[s]e"`, `"b[on]b[on]"`), surlignées une fois le mot bien rangé. TTS du mot dès qu'on le prend (le tri se fait à l'oreille) et à la pose correcte ; tap sur une maison → TTS de son champ `say`. Mauvaise maison → shake sans son ni rouge. Progression `module='sounds'` ref = id de série.
+
+Le menu `[profile]/index.vue` liste les 8 modules, tous actifs.
 
 ## Commandes
 
@@ -59,7 +61,7 @@ Chaque module a son propre fond coloré profond (`$bg-*` dans `_variables.scss`)
 
 ## Phases d'implémentation
 
-Avancer phase par phase (cf. plan) : **1. Socle** ✅ → **2. Mots** ✅ → **3. Tracer** ✅ → **4. Syllabes** ✅ → **5. Calculette** ✅ → **6. Finitions** ✅ → **7. Image-mot** ✅ → **8. Chiffres** ✅. Chaque phase a un livrable jouable ; ne pas commencer une phase avant que la précédente ne soit fonctionnelle de bout en bout. Quand une phase est terminée, mettre à jour les marqueurs ci-dessus et la section "État actuel".
+Avancer phase par phase (cf. plan) : **1. Socle** ✅ → **2. Mots** ✅ → **3. Tracer** ✅ → **4. Syllabes** ✅ → **5. Calculette** ✅ → **6. Finitions** ✅ → **7. Image-mot** ✅ → **8. Chiffres** ✅ → **9. Sons** ✅. Chaque phase a un livrable jouable ; ne pas commencer une phase avant que la précédente ne soit fonctionnelle de bout en bout. Quand une phase est terminée, mettre à jour les marqueurs ci-dessus et la section "État actuel".
 
 ## Idées de prochains modules
 

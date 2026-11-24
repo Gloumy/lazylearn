@@ -5,6 +5,7 @@ import { loadSyllables } from '~/data/syllables'
 import { TOTAL_OPERATIONS } from '~/data/calculator'
 import { TOTAL_COLORS } from '~/data/colors'
 import { TOTAL_RANGES } from '~/data/numbers'
+import { loadSounds } from '~/data/sounds'
 
 const route = useRoute()
 const id = Number(route.params.profile)
@@ -15,9 +16,10 @@ const { data: profiles } = await useFetch<Profile[]>('/api/profiles', {
 const profile = computed(() => profiles.value.find(p => p.id === id))
 
 const { refresh: refreshProgress, completedCount } = useProgress(id)
-const [words, syllables] = await Promise.all([
+const [words, syllables, sounds] = await Promise.all([
   loadWords(),
   loadSyllables(),
+  loadSounds(),
   refreshProgress(),
 ])
 
@@ -39,6 +41,7 @@ const modules: ModuleCard[] = [
   { key: 'pictures',   title: 'Image-mot', emoji: '🖼️', to: `/${id}/pictures`,   bg: '#4A148C', total: words.length },
   { key: 'colors',     title: 'Couleurs',  emoji: '🎨', to: `/${id}/colors`,     bg: '#263238', total: TOTAL_COLORS },
   { key: 'numbers',    title: 'Chiffres',  emoji: '🔢', to: `/${id}/numbers`,    bg: '#00695C', total: TOTAL_RANGES },
+  { key: 'sounds',     title: 'Les sons',  emoji: '👂', to: `/${id}/sounds`,     bg: '#880E4F', total: sounds.length },
 ]
 </script>
 

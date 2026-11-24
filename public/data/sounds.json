@@ -1,0 +1,179 @@
+[
+  {
+    "id": "s-z-1",
+    "title": "s / z",
+    "houses": [
+      { "key": "s", "label": "s", "emoji": "🐍", "say": "s, comme dans serpent" },
+      { "key": "z", "label": "z", "emoji": "🐝", "say": "z, comme dans abeille qui fait bzz" }
+    ],
+    "words": [
+      { "word": "[s]oleil",  "emoji": "☀️", "house": "s" },
+      { "word": "[s]alade",  "emoji": "🥗", "house": "s" },
+      { "word": "[s]inge",   "emoji": "🐒", "house": "s" },
+      { "word": "[s]ouris",  "emoji": "🐭", "house": "s" },
+      { "word": "[z]èbre",   "emoji": "🦓", "house": "z" },
+      { "word": "ro[s]e",    "emoji": "🌹", "house": "z" },
+      { "word": "mai[s]on",  "emoji": "🏠", "house": "z" },
+      { "word": "ci[s]eaux", "emoji": "✂️", "house": "z" }
+    ]
+  },
+  {
+    "id": "s-z-2",
+    "title": "s / z — pièges",
+    "houses": [
+      { "key": "s", "label": "s", "emoji": "🐍", "say": "s, comme dans serpent" },
+      { "key": "z", "label": "z", "emoji": "🐝", "say": "z, comme dans abeille qui fait bzz" }
+    ],
+    "words": [
+      { "word": "poi[ss]on", "emoji": "🐟", "house": "s" },
+      { "word": "[c]itron",  "emoji": "🍋", "house": "s" },
+      { "word": "gar[ç]on",  "emoji": "👦", "house": "s" },
+      { "word": "de[ss]ert", "emoji": "🍰", "house": "s" },
+      { "word": "poi[s]on",  "emoji": "☠️", "house": "z" },
+      { "word": "oi[s]eau",  "emoji": "🐦", "house": "z" },
+      { "word": "chemi[s]e", "emoji": "👕", "house": "z" },
+      { "word": "dé[s]ert",  "emoji": "🏜️", "house": "z" }
+    ]
+  },
+  {
+    "id": "f-v",
+    "title": "f / v",
+    "houses": [
+      { "key": "f", "label": "f", "emoji": "🧚", "say": "f, comme dans fée" },
+      { "key": "v", "label": "v", "emoji": "🌋", "say": "v, comme dans volcan" }
+    ],
+    "words": [
+      { "word": "[f]leur",   "emoji": "🌸", "house": "f" },
+      { "word": "[f]raise",  "emoji": "🍓", "house": "f" },
+      { "word": "[ph]oque",  "emoji": "🦭", "house": "f" },
+      { "word": "[f]usée",   "emoji": "🚀", "house": "f" },
+      { "word": "[v]ache",   "emoji": "🐄", "house": "v" },
+      { "word": "[v]élo",    "emoji": "🚲", "house": "v" },
+      { "word": "a[v]ion",   "emoji": "✈️", "house": "v" },
+      { "word": "[v]alise",  "emoji": "🧳", "house": "v" }
+    ]
+  },
+  {
+    "id": "ch-j",
+    "title": "ch / j",
+    "houses": [
+      { "key": "ch", "label": "ch", "emoji": "🤫", "say": "ch, comme dans chut" },
+      { "key": "j",  "label": "j",  "emoji": "🎮", "say": "j, comme dans jeu" }
+    ],
+    "words": [
+      { "word": "[ch]at",       "emoji": "🐱", "house": "ch" },
+      { "word": "[ch]eval",     "emoji": "🐴", "house": "ch" },
+      { "word": "[ch]ampignon", "emoji": "🍄", "house": "ch" },
+      { "word": "bou[ch]e",     "emoji": "👄", "house": "ch" },
+      { "word": "[g]irafe",     "emoji": "🦒", "house": "j" },
+      { "word": "[j]us",        "emoji": "🧃", "house": "j" },
+      { "word": "oran[g]e",     "emoji": "🍊", "house": "j" },
+      { "word": "froma[g]e",    "emoji": "🧀", "house": "j" }
+    ]
+  },
+  {
+    "id": "an-on",
+    "title": "an / on",
+    "houses": [
+      { "key": "an", "label": "an", "emoji": "👩", "say": "an, comme dans maman" },
+      { "key": "on", "label": "on", "emoji": "🌉", "say": "on, comme dans pont" }
+    ],
+    "words": [
+      { "word": "[an]ge",       "emoji": "👼", "house": "an" },
+      { "word": "d[en]t",       "emoji": "🦷", "house": "an" },
+      { "word": "éléph[an]t",   "emoji": "🐘", "house": "an" },
+      { "word": "k[an]gourou",  "emoji": "🦘", "house": "an" },
+      { "word": "t[en]te",      "emoji": "⛺", "house": "an" },
+      { "word": "b[on]b[on]",   "emoji": "🍬", "house": "on" },
+      { "word": "ball[on]",     "emoji": "🎈", "house": "on" },
+      { "word": "li[on]",       "emoji": "🦁", "house": "on" },
+      { "word": "mout[on]",     "emoji": "🐑", "house": "on" },
+      { "word": "c[on]combre",  "emoji": "🥒", "house": "on" }
+    ]
+  },
+  {
+    "id": "on-in",
+    "title": "on / in",
+    "houses": [
+      { "key": "on", "label": "on", "emoji": "🌉", "say": "on, comme dans pont" },
+      { "key": "in", "label": "in", "emoji": "🍇", "say": "in, comme dans raisin" }
+    ],
+    "words": [
+      { "word": "sav[on]",     "emoji": "🧼", "house": "on" },
+      { "word": "m[on]tagne",  "emoji": "⛰️", "house": "on" },
+      { "word": "c[on]combre", "emoji": "🥒", "house": "on" },
+      { "word": "li[on]",      "emoji": "🦁", "house": "on" },
+      { "word": "lap[in]",     "emoji": "🐰", "house": "in" },
+      { "word": "sap[in]",     "emoji": "🌲", "house": "in" },
+      { "word": "p[ain]",      "emoji": "🍞", "house": "in" },
+      { "word": "m[ain]",      "emoji": "✋", "house": "in" },
+      { "word": "tr[ain]",     "emoji": "🚂", "house": "in" },
+      { "word": "p[ein]ture",  "emoji": "🎨", "house": "in" }
+    ]
+  },
+  {
+    "id": "e-ai",
+    "title": "é / è",
+    "houses": [
+      { "key": "é", "label": "é", "emoji": "👶", "say": "é, comme dans bébé" },
+      { "key": "è", "label": "è", "emoji": "🐐", "say": "è, comme dans chèvre" }
+    ],
+    "words": [
+      { "word": "v[é]lo",   "emoji": "🚲", "house": "é" },
+      { "word": "[é]toile", "emoji": "⭐", "house": "é" },
+      { "word": "n[ez]",    "emoji": "👃", "house": "é" },
+      { "word": "cl[é]",    "emoji": "🔑", "house": "é" },
+      { "word": "f[ée]",    "emoji": "🧚", "house": "é" },
+      { "word": "fr[ai]se", "emoji": "🍓", "house": "è" },
+      { "word": "for[ê]t",  "emoji": "🌳", "house": "è" },
+      { "word": "l[ai]t",   "emoji": "🥛", "house": "è" },
+      { "word": "bal[ei]ne","emoji": "🐋", "house": "è" },
+      { "word": "f[ê]te",   "emoji": "🎉", "house": "è" }
+    ]
+  },
+  {
+    "id": "o-au-eau",
+    "title": "o / au / eau",
+    "houses": [
+      { "key": "o",   "label": "o",   "say": "o tout seul" },
+      { "key": "au",  "label": "au",  "say": "a, u" },
+      { "key": "eau", "label": "eau", "say": "e, a, u" }
+    ],
+    "words": [
+      { "word": "vél[o]",      "emoji": "🚲", "house": "o" },
+      { "word": "rob[o]t",     "emoji": "🤖", "house": "o" },
+      { "word": "m[o]t[o]",    "emoji": "🏍️", "house": "o" },
+      { "word": "dinos[au]re", "emoji": "🦕", "house": "au" },
+      { "word": "ch[au]ssette","emoji": "🧦", "house": "au" },
+      { "word": "[au]bergine", "emoji": "🍆", "house": "au" },
+      { "word": "bat[eau]",    "emoji": "🚢", "house": "eau" },
+      { "word": "gât[eau]",    "emoji": "🎂", "house": "eau" },
+      { "word": "chap[eau]",   "emoji": "🎩", "house": "eau" },
+      { "word": "cad[eau]",    "emoji": "🎁", "house": "eau" }
+    ]
+  },
+  {
+    "id": "s-ss-c-c",
+    "title": "s / ss / c / ç",
+    "houses": [
+      { "key": "s",  "label": "s",  "say": "un s" },
+      { "key": "ss", "label": "ss", "say": "deux s" },
+      { "key": "c",  "label": "c",  "say": "un c" },
+      { "key": "ç",  "label": "ç",  "say": "c cédille" }
+    ],
+    "words": [
+      { "word": "[s]ac",      "emoji": "👜", "house": "s" },
+      { "word": "[s]alade",   "emoji": "🥗", "house": "s" },
+      { "word": "bu[s]",      "emoji": "🚌", "house": "s" },
+      { "word": "poi[ss]on",  "emoji": "🐟", "house": "ss" },
+      { "word": "ta[ss]e",    "emoji": "☕", "house": "ss" },
+      { "word": "bro[ss]e",   "emoji": "🪥", "house": "ss" },
+      { "word": "[c]itron",   "emoji": "🍋", "house": "c" },
+      { "word": "[c]inéma",   "emoji": "🎬", "house": "c" },
+      { "word": "[c]erf",     "emoji": "🦌", "house": "c" },
+      { "word": "gar[ç]on",   "emoji": "👦", "house": "ç" },
+      { "word": "ma[ç]on",    "emoji": "🧱", "house": "ç" },
+      { "word": "gla[ç]on",   "emoji": "🧊", "house": "ç" }
+    ]
+  }
+]
